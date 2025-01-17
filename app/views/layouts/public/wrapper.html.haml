@@ -1,0 +1,42 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "UTF-8"}/
+    %meta{:content => "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0", :name => "viewport"}/
+    %meta{:content => "ie=edge", "http-equiv" => "X-UA-Compatible"}/
+    %title= yield(:title)
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", integrity: true, crossorigin: "anonymous", type: "module"
+  %body
+    #toast-container.position-fixed.end-0.p-3{:style => "z-index: 1050;top: 50px"}
+      = render 'shared/flashes'
+    .container-fluid.bg-dark.py-2
+      .row
+        .col-2.d-flex.justify-content-end.align-items-center.pt-2
+          = link_to root_path do
+            =  image_tag '/logo.png', height: '50', class: 'd-inline-block align-top rounded-pill', alt: 'CardTrading Logo'
+        .col-8.pt-2
+          = search_form_for @q, url: root_path, method: :get do |f|
+            = f.search_field :name_cont, class: "form-control form-control-lg rounded-pill", placeholder: "Partial card name + set, categories, sellers"
+        .col-2.d-flex.justify-content-start.align-items-center.pt-2
+          .row
+            .col-6
+              %a{ href: "#", class: "text-white" }
+                %i.bi.bi-person-circle.fs-3
+            .col-6
+              %a{ href: "#", class: "text-white" }
+                %i.bi.bi-cart.fs-3
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      .container
+        = link_to root_path, class: "navbar-brand" do
+          Home
+        #navbarNav.collapse.navbar-collapse
+          %ul.navbar-nav
+            - @series_list.each do |series|
+              %li.nav-item
+                = link_to series.name, root_path(series: series.id), class: "nav-link #{'active' if params[:series] == series.id.to_s}"
+    = yield

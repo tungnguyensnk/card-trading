@@ -1,0 +1,59 @@
+.container.mt-4
+  %nav.aria-label{ "breadcrumb" => "" }
+    %ol.breadcrumb
+      %li.breadcrumb-item
+        = link_to root_path("series": @card.season.series.id) do
+          = @card.season.series.name
+      %li.breadcrumb-item
+        %a{ href: "#" }= @card.season.name
+  %h2.text-truncate{ style: "max-width: 100%", title: @card.name }= @card.name
+
+  .row
+    .col-md-3
+      .row.my-3
+        .col-5
+          - if @prev_card.present?
+            = link_to public_card_path(@prev_card), class: "btn btn-sm btn-primary" do
+              %i.bi.bi-arrow-left
+          - else
+            %button.btn.btn-sm.btn-primary{ disabled: true }
+              %i.bi.bi-arrow-left
+        .col-2.text-center
+          %small.text-muted.mt-2= @card.id.to_s + "/" + Card.count.to_s
+        .col-5.text-end
+          - if @next_card.present?
+            = link_to public_card_path(@next_card), class: "btn btn-sm btn-primary" do
+              %i.bi.bi-arrow-right
+          - else
+            %button.btn.btn-sm.btn-primary{ disabled: true }
+              %i.bi.bi-arrow-right
+      - if @card.image_url.present?
+        = image_tag @card.image_url, class: "card-img-top img-fluid rounded fixed-image", onerror: "this.onerror=null; this.src='https://placehold.co/377x527';"
+      - else
+        = image_tag "https://placehold.co/377x527", class: "card-img-top img-fluid rounded fixed-image"
+
+    .col-md-7
+      %h2 Info
+      %h5= @card.name
+      %p= @card.description
+
+      %h3 Card Types
+      - card_type_badges = [{ name: "Pokémon", color: "primary" }, { name: "Monster", color: "secondary" }, { name: "Spell", color: "success" }, { name: "Leader", color: "info" }, { name: "Character", color: "warning" }]
+      - cur_type = @card.card_type
+      - card_type_badges.each do |type|
+        - if type[:name] == cur_type
+          .badge{ class: "bg-#{type[:color]}" }= type[:name]
+
+      %h3 Rarity
+      - rarity_badges = [{ name: "Common", color: "light" }, { name: "Uncommon", color: "warning" }, { name: "Rare", color: "danger" }, { name: "Promo", color: "dark" }]
+      - cur_rarity = @card.rarity
+      - rarity_badges.each do |rarity|
+        - if rarity[:name] == cur_rarity
+          .badge{ class: "bg-#{rarity[:color]} text-white" }= rarity[:name]
+
+    .col-md-2
+      .card.shadow-sm.mt-4
+        .card-body.text-center
+          %h3 Best Deal
+          %p.display-5.text-success $5.00
+          %button.btn.btn-warning Add to cart

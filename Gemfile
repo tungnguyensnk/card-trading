@@ -13,6 +13,9 @@ gem "redis", ">= 4.0.1"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem 'haml-rails', '~> 2.1'
+gem 'kaminari', '~> 1.2', '>= 1.2.2'
+gem 'bootstrap5-kaminari-views'
+gem 'ransack', '~> 4.2', '>= 4.2.1'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

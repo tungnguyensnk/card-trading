@@ -1,0 +1,17 @@
+- if @series.present?
+  %h1.text-center= @series.name
+- else
+  %h1.text-center Card Collection
+
+.container
+  .row
+    - @cards.each do |card|
+      .col-md-4.col-sm-6.mb-4
+        .card.shadow-sm{ onclick: "location.href='#{public_card_path(card)}'", style: "cursor: pointer;" }
+          .card-body.text-center
+            - if card.image_url.present?
+              = image_tag card.image_url, class: "card-img-top img-fluid rounded fixed-image", onerror: "this.onerror=null; this.src='https://placehold.co/377x527';"
+            - else
+              = image_tag "https://placehold.co/377x527", class: "card-img-top img-fluid rounded fixed-image"
+
+            %h5.card-title.mt-3= link_to card.name, public_card_path(card), class: "text-primary"

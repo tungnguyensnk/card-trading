@@ -1,0 +1,42 @@
+.container
+  .row.my-3
+    .col
+      %h1 Admin Panel
+  .row.my-3
+    .col.text-end
+      = link_to "Upload Cards", upload_admin_cards_path, class: "btn btn-primary", data: { turbo: false }
+
+  .row
+    .col
+      %table.table.table-striped.table-hover.table-bordered
+        %thead.table-dark
+          %tr
+            %th ID
+            %th Series
+            %th Season
+            %th Name
+            %th Rarity
+            %th Card Type
+            %th Description
+            %th Image
+            %th Created At
+        %tbody
+          - @cards.each do |card|
+            %tr
+              %td= card.id
+              %td= card.season.series.name
+              %td= card.season.name
+              %td= card.name
+              %td= card.rarity
+              %td= card.card_type
+              %td= card.description
+              %td.text-center
+                - if card.image_url.present?
+                  = image_tag card.image_url, class: "img-thumbnail", style: "width: 37px; height: 52px;", onerror: "this.onerror=null; this.src='https://placehold.co/37x52';"
+              %td= card.created_at.strftime("%Y-%m-%d %H:%M")
+  .row.justify-content-center.mt-4
+    .col-5
+      = paginate @cards, theme: 'bootstrap-5', param_name: :page
+    .col-7
+      .text-end
+        = page_entries_info @cards

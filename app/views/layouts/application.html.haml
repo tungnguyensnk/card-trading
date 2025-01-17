@@ -13,6 +13,8 @@
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+    = javascript_include_tag "application", "data-turbo-track": "reload", integrity: true, crossorigin: "anonymous", type: "module"
   %body
+    #toast-container.position-fixed.end-0.p-3{:style => "z-index: 1050;top: 50px"}
+      = render 'shared/flashes'
     = yield

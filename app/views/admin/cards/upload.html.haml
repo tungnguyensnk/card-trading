@@ -1,0 +1,14 @@
+.container
+  .row.justify-content-center
+    .col-md-6
+      .card.shadow-lg.mt-5
+        .card-body
+          %h1.text-center Upload Cards via CSV
+
+          = form_with url: upload_admin_cards_path, local: true, multipart: true, class: "mt-4" do |f|
+            .mb-3
+              = f.label :file, "Select CSV File", class: "form-label"
+              = f.file_field :file, accept: ".csv", class: "form-control"
+
+            .text-center
+              = f.submit "Upload", class: "btn btn-primary mt-3"
