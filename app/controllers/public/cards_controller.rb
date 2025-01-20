@@ -21,5 +21,37 @@ class Public::CardsController < ApplicationController
   def set_var
     @series_list = Series.all
     @q = Card.includes(season: :series).ransack(params[:q])
+    # quality: Near Mint, Lightly Played, Moderately Played, Heavily Played, Damaged
+    # language: English, Japanese
+    @sellers = [
+      { name: "Hairy Tarantula", quality: "Near Mint", language: "English", quantity: 10, price: 10.14 },
+      { name: "Red Dragon", quality: "Lightly Played", language: "English", quantity: 8, price: 6.14 },
+      { name: "The End Games", quality: "Moderately Played", language: "Japanese", quantity: 10, price: 10.14 },
+      { name: "401 Games", quality: "Heavily Played", language: "English", quantity: 4, price: 2.14 },
+      { name: "Cardboard Memories", quality: "Damaged", language: "Japanese", quantity: 10, price: 10.14 },
+      { name: "Hairy Tarantula", quality: "Near Mint", language: "English", quantity: 9, price: 9.14 },
+      { name: "Red Dragon", quality: "Lightly Played", language: "English", quantity: 10, price: 10.14 },
+      { name: "The End Games", quality: "Moderately Played", language: "Japanese", quantity: 2, price: 1.14 },
+      { name: "401 Games", quality: "Heavily Played", language: "English", quantity: 10, price: 10.14 },
+      { name: "Cardboard Memories", quality: "Damaged", language: "Japanese", quantity: 10, price: 10.14 },
+      { name: "Hairy Tarantula", quality: "Near Mint", language: "English", quantity: 10, price: 10.14 },
+      { name: "Red Dragon", quality: "Lightly Played", language: "English", quantity: 10, price: 10.14 },
+      { name: "The End Games", quality: "Moderately Played", language: "Japanese", quantity: 10, price: 10.14 },
+      { name: "401 Games", quality: "Heavily Played", language: "English", quantity: 10, price: 10.14 },
+      { name: "Cardboard Memories", quality: "Damaged", language: "Japanese", quantity: 10, price: 10.14 },
+    ]
+
+    @quality_colors = {
+      "Near Mint" => "success",
+      "Lightly Played" => "info",
+      "Moderately Played" => "warning",
+      "Heavily Played" => "danger",
+      "Damaged" => "dark"
+    }
+
+    @language_classes = {
+      "English" => "fi-us",
+      "Japanese" => "fi-jp"
+    }
   end
 end

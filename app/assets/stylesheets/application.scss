@@ -1,8 +1,88 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+//@import 'flag-icons/css/flag-icons.min';
+@import 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css';
 
 .fixed-image {
   height: 527px;
   object-fit: cover;
   width: 377px;
+}
+
+.sellers-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sellers-table thead th {
+  background-color: #212529;
+  color: #fff;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.sellers-table tbody tr {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.sellers-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.sellers-table th,
+.sellers-table td {
+  border-left: none !important;
+  border-right: none !important;
+  padding: 10px;
+}
+
+.sellers-table th:first-child,
+.sellers-table td:first-child {
+  border-top-left-radius: 10px;
+}
+
+.sellers-table th:last-child,
+.sellers-table td:last-child {
+  border-top-right-radius: 10px;
+}
+
+.quantity-selector {
+  width: 60px;
+  font-size: 14px;
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+}
+
+.of-text {
+  background: #e9ecef;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 0 8px 8px 0;
+}
+
+.cart-btn {
+  background-color: #d4edff;
+  border: none;
+  width: 40px;
+  height: 35px;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.cart-btn i {
+  color: white;
+  font-size: 18px;
+}
+
+.fixed-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover .fixed-image {
+  transform: scale(0.9);
 }

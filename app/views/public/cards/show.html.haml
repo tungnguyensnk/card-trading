@@ -34,26 +34,97 @@
 
     .col-md-7
       %h2 Info
-      %h5= @card.name
-      %p= @card.description
+      %hr
+        .row
+          .col-5
+            %h5= @card.name
+            %p= @card.description
 
-      %h3 Card Types
-      - card_type_badges = [{ name: "Pokémon", color: "primary" }, { name: "Monster", color: "secondary" }, { name: "Spell", color: "success" }, { name: "Leader", color: "info" }, { name: "Character", color: "warning" }]
-      - cur_type = @card.card_type
-      - card_type_badges.each do |type|
-        - if type[:name] == cur_type
-          .badge{ class: "bg-#{type[:color]}" }= type[:name]
+            %h3 Card Types
+            - card_type_badges = [{ name: "Pokémon", color: "primary" }, { name: "Monster", color: "secondary" }, { name: "Spell", color: "success" }, { name: "Leader", color: "info" }, { name: "Character", color: "warning" }]
+            - cur_type = @card.card_type
+            - card_type_badges.each do |type|
+              - if type[:name] == cur_type
+                .badge{ class: "bg-#{type[:color]}" }= type[:name]
 
-      %h3 Rarity
-      - rarity_badges = [{ name: "Common", color: "light" }, { name: "Uncommon", color: "warning" }, { name: "Rare", color: "danger" }, { name: "Promo", color: "dark" }]
-      - cur_rarity = @card.rarity
-      - rarity_badges.each do |rarity|
-        - if rarity[:name] == cur_rarity
-          .badge{ class: "bg-#{rarity[:color]} text-white" }= rarity[:name]
+            %h3 Rarity
+            - rarity_badges = [{ name: "Common", color: "warning" }, { name: "Uncommon", color: "warning" }, { name: "Rare", color: "danger" }, { name: "Promo", color: "dark" }]
+            - cur_rarity = @card.rarity
+            - rarity_badges.each do |rarity|
+              - if rarity[:name] == cur_rarity
+                .badge{ class: "bg-#{rarity[:color]} text-white" }= rarity[:name]
+          .col-7{ data: { controller: "market-chart" } }
+            %canvas#marketChart
+
 
     .col-md-2
-      .card.shadow-sm.mt-4
-        .card-body.text-center
-          %h3 Best Deal
-          %p.display-5.text-success $5.00
-          %button.btn.btn-warning Add to cart
+      .card.shadow.p-3.text-center
+        %h5 Best Deal
+        %h2.text-success $10.14
+
+        %button.btn.btn-warning.w-100.mt-2.text-white
+          %i.bi.bi-cart-plus.me-2
+          Add to cart
+
+        %div.mt-3
+          %div.dropdown
+            %button.btn.btn-outline-secondary.dropdown-toggle.w-100{ type: "button", "data-bs-toggle": "dropdown", "aria-expanded": "false" }
+              %img{ src: "https://flagcdn.com/w40/us.png", alt: "US Flag", class: "me-2", width: "20" }
+              EN
+            %ul.dropdown-menu.w-100
+              %li
+                %a.dropdown-item{ href: "#" } 🇺🇸 English
+              %li
+                %a.dropdown-item{ href: "#" } 🇫🇷 French
+              %li
+                %a.dropdown-item{ href: "#" } 🇩🇪 German
+
+        %div.mt-2
+          %div.dropdown
+            %button.btn.btn-outline-secondary.dropdown-toggle.w-100{ type: "button", "data-bs-toggle": "dropdown", "aria-expanded": "false" }
+              %span.badge.bg-success.me-2 NM
+              Near Mint
+            %ul.dropdown-menu.w-100
+              %li
+                %a.dropdown-item{ href: "#" } NM - Near Mint
+              %li
+                %a.dropdown-item{ href: "#" } EX - Excellent
+              %li
+                %a.dropdown-item{ href: "#" } VG - Very Good
+
+  .row.mt-4
+    .col.small
+      %table.table.table-hover.table-striped.sellers-table
+        %thead
+          %tr
+            %th Seller
+            %th Info
+            %th.text-center Price
+            %th.text-center Qty
+            %th
+        %tbody
+          - @sellers.each do |seller|
+            %tr
+              %td
+                .d-flex.align-items-center.gap-2
+                  %span.fi{ class: "#{@language_classes[seller[:language]]}" }
+                  = link_to seller[:name], "#", class: "text-primary text-decoration-none fw-bold"
+
+                .d-flex.align-items-center.gap-1.text-muted
+                  %i.bi.bi-star-fill
+                  %span 36K
+                  %span.badge.bg-secondary.pro-badge PRO
+              %td
+                %span.fi{ class: "#{@language_classes[seller[:language]]}" }
+                %span.badge{ class: "bg-#{@quality_colors[seller[:quality]]} text-white" }= seller[:quality]
+              %td.text-center
+                %span.fw-bold $#{seller[:price]}
+              %td
+                .d-flex.align-items-center.justify-content-center
+                  %select.form-select.quantity-selector
+                    - seller[:quantity].times do |i|
+                      %option{ value: i + 1 }= i + 1
+                  %span.of-text= "of #{seller[:quantity]}"
+              %td{ width: "20px" }
+                %button.btn.cart-btn
+                  %i.bi.bi-cart
