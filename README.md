@@ -11,7 +11,7 @@
 2. Initialize the database:
 
     ```bash
-    docker compose exec app bundle exec rails db:setup
+    docker compose exec app bundle exec rails db:drop db:setup
     ```
 
 ### Usage
